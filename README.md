@@ -1,19 +1,24 @@
-# CSV 批次轉 TXT 工具
+# CSV 批次轉換工具
 
 ## 介紹
 
-這是一個簡易的 Windows GUI 工具，讓你可以批次選取多個 CSV 檔案，並將其轉換為 UTF-8 編碼的 TXT 檔案。你可以在轉換時指定要刪除的欄位標題（可多組，逗號分隔），轉換後的 TXT 檔案將不包含這些欄位。
+這是一個簡易的 Windows GUI 工具，讓你可以批次選取多個 CSV 檔案，並將其轉換為不同格式的檔案（如 TXT, TSV, CSV）。你可以在轉換時指定要刪除的欄位、選擇輸出資料夾、輸出格式與分隔符號。
 
 ## 功能
+
 - 支援多檔案批次轉換
 - 可自訂要刪除的欄位標題（多組，逗號分隔）
-- 轉換後自動儲存為同名 .txt 檔，UTF-8 編碼
+- 可自訂輸出資料夾
+- 支援多種輸出格式（txt, tsv, csv）
+- 支援多種分隔符號（逗號, Tab, 分號）
+- 轉換後的檔案皆為 UTF-8 編碼
 - 圖形化操作介面，無需命令列
 
 ## 安裝與執行
+
 1. 需安裝 Python 3.x
-2. 內建 tkinter、csv 模組，無需額外安裝
-3. 下載 `csv_to_txt_batch.py`，於 Windows 雙擊或在命令列執行：
+2. 執行前需先安裝 `ttkbootstrap` 模組： `pip install ttkbootstrap`
+3. 下載 `csv_to_txt_batch.py`，於 Windows 環境雙擊或在命令列執行：
 
 ```powershell
 python csv_to_txt_batch.py
