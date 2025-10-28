@@ -1,4 +1,33 @@
-# CSV 批次轉換工具
+
+# CSV 批次轉換工具 / CSV Batch Converter
+
+**中文說明**
+
+一個現代化的 Windows 圖形介面工具，支援多檔案 CSV 批次轉換，可自訂輸出資料夾、輸出格式（txt/tsv/csv）、分隔符號，並可指定要刪除的欄位。介面美觀、操作簡單，適合資料前處理、報表轉檔等需求。
+
+**主要特色：**
+- 多檔案批次轉換
+- 支援 txt/tsv/csv 輸出格式
+- 可自訂分隔符號（逗號、Tab、分號）
+- 可指定要刪除的欄位
+- 輸出資料夾自訂
+- 介面現代化（ttkbootstrap）
+
+---
+
+**English Description**
+
+A modern Windows GUI tool for batch converting multiple CSV files. Supports custom output folder, output format (txt/tsv/csv), delimiter selection, and column removal. Beautiful interface and easy to use—perfect for data preprocessing and report conversion.
+
+**Features:**
+- Batch convert multiple files
+- Output as txt, tsv, or csv
+- Custom delimiter (comma, tab, semicolon)
+- Remove specified columns
+- Custom output folder
+- Modern UI (ttkbootstrap)
+
+---
 
 ## 介紹
 
