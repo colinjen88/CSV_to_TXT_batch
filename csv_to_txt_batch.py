@@ -16,7 +16,7 @@ class CsvBatchConverter:
         self.file_list_var = tb.StringVar()
         self.file_list_var.set('尚未選取檔案')
         self.output_dir_var = tb.StringVar()
-        self.output_dir_var.set('Export_File')
+        self.output_dir_var.set('Export_here')
         self.output_format_var = tb.StringVar()
         self.output_format_var.set('txt')
         self.delimiter_var = tb.StringVar()
@@ -117,6 +117,13 @@ class CsvBatchConverter:
         if not output_dir:
             Messagebox.show_warning('請先選擇輸出資料夾！', title='警告')
             return
+        # 若資料夾不存在則自動建立
+        if not os.path.exists(output_dir):
+            try:
+                os.makedirs(output_dir)
+            except Exception as e:
+                Messagebox.show_error(f'無法建立資料夾：{output_dir}\n錯誤: {e}', title='錯誤')
+                return
         remove_columns = [col.strip() for col in self.remove_columns_var.get().split(',') if col.strip()]
         output_format = self.output_format_var.get()
         delim_map = {'逗號(,)': ',', 'Tab(\t)': '\t', '分號(;)': ';'}

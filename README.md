@@ -43,15 +43,63 @@ A modern Windows GUI tool for batch converting multiple CSV files. Supports cust
 - 轉換後的檔案皆為 UTF-8 編碼
 - 圖形化操作介面，無需命令列
 
-## 安裝與執行
 
-1. 需安裝 Python 3.x
-2. 執行前需先安裝 `ttkbootstrap` 模組： `pip install ttkbootstrap`
-3. 下載 `csv_to_txt_batch.py`，於 Windows 環境雙擊或在命令列執行：
 
-```powershell
-python csv_to_txt_batch.py
-```
+## 功能特色
+
+- 批次選取多個 CSV 檔案，一鍵轉換為 TXT（UTF-8 編碼）
+- 可自訂輸出資料夾，若不存在會自動建立
+- 可指定要刪除的欄位（輸入標題名稱，支援多組）
+- 支援多種輸出格式與分隔符號
+	- **輸出格式**：txt、tsv、csv
+	- **分隔符號**：逗號(,)、Tab(\t)、分號(;) 
+- 現代化專業 UI（ttkbootstrap）
+- 支援 Windows 執行檔打包
+
+## 支援的轉換格式
+
+- **txt**：純文字檔，可自訂分隔符號
+- **tsv**：Tab 分隔值檔案
+- **csv**：逗號分隔值檔案
+
+### 可選分隔符號
+
+- 逗號 ( , )
+- Tab (\t)
+- 分號 ( ; )
+
+---
+
+## Features
+
+- Batch select multiple CSV files and convert to TXT (UTF-8)
+- Custom output folder (auto-created if missing)
+- Remove columns by header name (multiple supported)
+- Support multiple output formats and delimiters
+	- **Output formats**: txt, tsv, csv
+	- **Delimiters**: comma (,), tab (\t), semicolon (;) 
+- Modern professional UI (ttkbootstrap)
+- Windows executable packaging supported
+
+## Supported Conversion Formats
+
+- **txt**: Plain text file, customizable delimiter
+- **tsv**: Tab-separated values file
+- **csv**: Comma-separated values file
+
+### Available Delimiters
+
+- Comma ( , )
+- Tab (\t)
+- Semicolon ( ; )
+	```powershell
+	pip install pyinstaller
+	```
+2. 在專案目錄下執行：
+	```powershell
+	pyinstaller --noconsole --onefile csv_to_txt_batch.py
+	```
+3. 執行檔會產生在 `dist` 資料夾內，直接複製該檔案即可在 Windows 執行。
 
 ## 使用方式
 1. 點選「選取 CSV 檔案」選擇多個要轉換的檔案
