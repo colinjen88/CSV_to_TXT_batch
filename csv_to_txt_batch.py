@@ -103,6 +103,22 @@ class CsvBatchConverter:
         # 轉換按鈕
         convert_btn = tb.Button(self.root, text='開始轉換', command=self.convert_files)
         convert_btn.pack(pady=(18, 10))
+        
+        # 版權資訊（很小字，含 mailto 連結）
+        copyright_frame = tb.Frame(self.root)
+        copyright_frame.pack(side='bottom', pady=(0, 4), fill='x')
+        copyright_label = tb.Label(
+            copyright_frame,
+            text='© 2025 by Colinjen',
+            font=('Microsoft JhengHei', 8),
+            foreground='#888888',
+            cursor='hand2'
+        )
+        copyright_label.pack(side='right', padx=8)
+        def open_email(event=None):
+            import webbrowser
+            webbrowser.open('mailto:colinjen88@gmail.com')
+        copyright_label.bind('<Button-1>', open_email)
 
     def select_output_dir(self):
         dir_path = filedialog.askdirectory(title='選擇輸出資料夾')
