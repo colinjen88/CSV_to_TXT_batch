@@ -56,17 +56,31 @@ A modern Windows GUI tool for batch converting multiple CSV files. Supports cust
 - 現代化專業 UI（ttkbootstrap）
 - 支援 Windows 執行檔打包
 
-## 支援的轉換格式
+
+## 支援的轉換格式與未來規格（開發中）
 
 - **txt**：純文字檔，可自訂分隔符號
 - **tsv**：Tab 分隔值檔案
 - **csv**：逗號分隔值檔案
+- **xlsx**（開發中）：支援 Excel 檔案匯入，轉換為 txt/tsv/csv
 
-### 可選分隔符號
+### .xlsx 支援設計草案
 
-- 逗號 ( , )
-- Tab (\t)
-- 分號 ( ; )
+- 輸入：允許選取 .csv 或 .xlsx 檔案（未來可多選混合）
+- Sheet 處理：
+	- 預設僅轉換第一個 sheet
+	- 進階：可選擇特定 sheet 或合併所有 sheet（未來 CLI/GUI 參數）
+- 欄位處理：同 csv，可指定要移除的欄位
+- 輸出：每個輸入檔案產生一個同名 .txt/.tsv/.csv，若多 sheet 則為 {filename}__{sheetname}.txt
+- 分隔符號：同 csv，預設 Tab，可自訂
+- 編碼：輸出皆為 UTF-8
+- 錯誤處理：
+	- 檔案無法讀取/格式錯誤時跳過並顯示訊息
+	- 指定 sheet 不存在時跳過該檔案
+	- 其他錯誤記錄於 log
+- 依賴：需安裝 pandas、openpyxl
+
+> 註：未來可考慮支援 .xls（舊 Excel 格式）、大型檔案分批處理、拖放/資料夾遞迴等。
 
 ---
 
