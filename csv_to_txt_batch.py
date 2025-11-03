@@ -18,7 +18,7 @@ class CsvBatchConverter:
         self.file_list_var = tb.StringVar()
         self.file_list_var.set('尚未選取檔案')
         self.output_dir_var = tb.StringVar()
-        self.output_dir_var.set('Export_here')
+        self.output_dir_var.set('')
         self.output_format_var = tb.StringVar()
         self.output_format_var.set('txt')
         self.delimiter_var = tb.StringVar()
@@ -57,7 +57,8 @@ class CsvBatchConverter:
         output_dir_frame.pack(pady=5, fill='x', padx=40)
         output_dir_label = tb.Label(output_dir_frame, text='輸出資料夾:', font=('Microsoft JhengHei', 12))
         output_dir_label.pack(side='left')
-        output_dir_entry = tb.Entry(output_dir_frame, textvariable=self.output_dir_var, width=28, font=('Microsoft JhengHei', 12))
+        # 顯示完整路徑，寬度加大
+        output_dir_entry = tb.Entry(output_dir_frame, textvariable=self.output_dir_var, width=48, font=('Microsoft JhengHei', 10))
         output_dir_entry.pack(side='left', padx=4)
         output_dir_btn = tb.Button(output_dir_frame, text='選擇', command=self.select_output_dir)
         output_dir_btn.pack(side='left', padx=4)
@@ -115,6 +116,10 @@ class CsvBatchConverter:
             filetypes=[('CSV/XLSX/XLS Files', '*.csv *.xlsx *.xls'), ('CSV Files', '*.csv'), ('Excel Files', '*.xlsx *.xls')]
         )
         self.selected_files = list(files)
+        # 若有選檔案，預設輸出路徑設為第一個檔案的資料夾
+        if self.selected_files:
+            first_dir = os.path.dirname(self.selected_files[0])
+            self.output_dir_var.set(first_dir)
         self._update_file_listbox()
 
     def _update_file_listbox(self):
