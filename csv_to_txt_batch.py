@@ -43,8 +43,16 @@ class CsvBatchConverter:
         title.pack(pady=(18, 10))
 
         # 選檔案
-        select_btn = tb.Button(self.root, text='選取 CSV/XLSX 檔案', command=self.select_files)
+        select_btn = tb.Button(self.root, text='選取檔案', command=self.select_files)
         select_btn.pack(pady=(5, 2))
+        # 支援格式提示
+        support_label = tb.Label(
+            self.root,
+            text='支援格式：csv, xlsx, xls, doc, docx, dot, wps, pdf, rtf, html',
+            font=('Microsoft JhengHei', 9),
+            foreground='#888888'
+        )
+        support_label.pack(pady=(0, 6))
 
         # 檔案清單區塊
         file_list_frame = tb.Labelframe(self.root, text='已選取檔案')
@@ -128,8 +136,17 @@ class CsvBatchConverter:
 
     def select_files(self):
         files = filedialog.askopenfilenames(
-            title='選取 CSV/XLSX/XLS 檔案',
-            filetypes=[('CSV/XLSX/XLS Files', '*.csv *.xlsx *.xls'), ('CSV Files', '*.csv'), ('Excel Files', '*.xlsx *.xls')]
+            title='選取支援的檔案',
+            filetypes=[
+                ('所有支援格式', '*.csv *.xlsx *.xls *.doc *.docx *.dot *.wps *.pdf *.rtf *.html'),
+                ('CSV', '*.csv'),
+                ('Excel', '*.xlsx *.xls'),
+                ('Word', '*.doc *.docx *.dot *.wps'),
+                ('PDF', '*.pdf'),
+                ('RTF', '*.rtf'),
+                ('HTML', '*.html'),
+                ('所有檔案', '*.*')
+            ]
         )
         self.selected_files = list(files)
         # 若有選檔案，預設輸出路徑設為第一個檔案的資料夾
@@ -234,6 +251,57 @@ class CsvBatchConverter:
                             success_count += 1
                         else:
                             print(f'Excel 檔案無資料: {file_path}')
+                elif file_ext in ('.doc', '.docx', '.dot', '.wps'):
+                    try:
+                        from docx import Document
+                        if file_ext == '.docx':
+                            doc = Document(file_path)
+                            text = '\n'.join([p.text for p in doc.paragraphs])
+                        else:
+                            # 其它格式嘗試用 pypandoc
+                            import pypandoc
+                            text = pypandoc.convert_file(file_path, 'plain')
+                        out_path = os.path.join(output_dir, base_name + ext)
+                        with open(out_path, 'w', encoding='utf-8') as f:
+                            f.write(text)
+                        success_count += 1
+                    except Exception as e:
+                        print(f'轉換失敗: {file_path}\n錯誤: {e}')
+                elif file_ext == '.pdf':
+                    try:
+                        from PyPDF2 import PdfReader
+                        reader = PdfReader(file_path)
+                        text = ''
+                        for page in reader.pages:
+                            text += page.extract_text() or ''
+                        out_path = os.path.join(output_dir, base_name + ext)
+                        with open(out_path, 'w', encoding='utf-8') as f:
+                            f.write(text)
+                        success_count += 1
+                    except Exception as e:
+                        print(f'轉換失敗: {file_path}\n錯誤: {e}')
+                elif file_ext == '.rtf':
+                    try:
+                        import pypandoc
+                        text = pypandoc.convert_file(file_path, 'plain')
+                        out_path = os.path.join(output_dir, base_name + ext)
+                        with open(out_path, 'w', encoding='utf-8') as f:
+                            f.write(text)
+                        success_count += 1
+                    except Exception as e:
+                        print(f'轉換失敗: {file_path}\n錯誤: {e}')
+                elif file_ext == '.html':
+                    try:
+                        from bs4 import BeautifulSoup
+                        with open(file_path, 'r', encoding='utf-8') as f:
+                            soup = BeautifulSoup(f, 'html.parser')
+                            text = soup.get_text('\n')
+                        out_path = os.path.join(output_dir, base_name + ext)
+                        with open(out_path, 'w', encoding='utf-8') as f:
+                            f.write(text)
+                        success_count += 1
+                    except Exception as e:
+                        print(f'轉換失敗: {file_path}\n錯誤: {e}')
                 else:
                     print(f'不支援的檔案格式: {file_path}')
             except Exception as e:
